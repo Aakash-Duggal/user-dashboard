@@ -23,6 +23,8 @@
       [options]="roles"
       formControlName="role"
       placeholder="Select role"
+      appendTo="body"
+      scrollHeight="150px"
     ></p-dropdown>
     @if(submitted && form.get('role')?.hasError('required')) {
     <small> Role is required </small>
