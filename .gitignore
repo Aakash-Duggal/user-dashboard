@@ -42,5 +42,4 @@ testem.log
 Thumbs.db
 .vercel
 .vercel/
-.dashboard/
 dashboard/

@@ -1,0 +1,138 @@
+.dashboard {
+  padding: 2rem;
+  color: var(--text-color);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin: 0;
+    color: var(--primary-color);
+  }
+}
+
+.add-btn {
+  height: 48px;
+}
+
+/* Table tweaks */
+:host ::ng-deep .p-datatable {
+  font-size: 14px;
+}
+
+.empty {
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+}
+
+
+.chart-container {
+  max-width: 400px;
+  margin: 2rem auto;
+}
+
+
+
+
+:host ::ng-deep .p-datatable-loading-overlay {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+:host ::ng-deep .p-skeleton {
+  border-radius: 6px;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr > td {
+  padding: 1rem;
+}
+
+
+:host ::ng-deep .p-datatable-tbody tr {
+  animation: fadeIn 0.25s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+/* SEARCH BAR STYLING */
+:host ::ng-deep .p-inputgroup {
+  width: 320px;
+  height: 42px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  border: 1px solid #dfe7ef;
+  box-shadow: none;
+}
+
+/* Addon (search + clear icons) */
+:host ::ng-deep .p-inputgroup-addon {
+  background: #f8fafc;
+  color: #6b7280;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.75rem;
+  height: 100%;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+:host ::ng-deep .p-inputgroup-addon:first-child {
+  border-right: 1px solid #dfe7ef;
+}
+
+:host ::ng-deep .p-inputgroup-addon:last-child {
+  border-left: 1px solid #dfe7ef;
+}
+
+/* Input field */
+:host ::ng-deep .p-inputgroup input.p-inputtext {
+  border: none;
+  flex: 1;
+  padding: 0 0.75rem;
+  font-size: 0.9rem;
+  height: 100%;
+  outline: none;
+}
+
+/* Focus state */
+:host ::ng-deep .p-inputgroup:focus-within {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+:host ::ng-deep .p-inputgroup:focus-within input,
+:host ::ng-deep .p-inputgroup:focus-within .p-inputgroup-addon {
+  border-color: var(--primary-color);
+}
+
+/* Clear button hover */
+:host ::ng-deep .clear-btn:hover {
+  background: #eef2f7;
+  color: #ef4444;
+}
+
+/* Icon alignment */
+:host ::ng-deep .p-inputgroup-addon i {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
