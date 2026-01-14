@@ -1,0 +1,35 @@
+<form [formGroup]="form" class="form">
+  <div class="field">
+    <label>Name</label>
+    <input pInputText formControlName="name" placeholder="Enter name" />
+    @if(submitted && form.get('name')?.hasError('required')) {
+    <small> Name is required </small>
+    }
+  </div>
+
+  <div class="field">
+    <label>Email</label>
+    <input pInputText formControlName="email" placeholder="Enter email" />
+    @if(submitted && form.get('email')?.hasError('required')) {
+    <small> Email is required </small>
+    } @else if(submitted && form.get('email')?.hasError('email')) {
+    <small> Enter a valid email </small>
+    }
+  </div>
+
+  <div class="field">
+    <label>Role</label>
+    <p-dropdown
+      [options]="roles"
+      formControlName="role"
+      placeholder="Select role"
+    ></p-dropdown>
+    @if(submitted && form.get('role')?.hasError('required')) {
+    <small> Role is required </small>
+    }
+  </div>
+
+  <div class="actions">
+    <button pButton label="Add User" (click)="submit()" type="button"></button>
+  </div>
+</form>

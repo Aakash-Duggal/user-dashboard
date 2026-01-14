@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+/* PrimeNG Theme */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+
+/* PrimeNG Core */
+@import "primeng/resources/primeng.css";
+
+/* PrimeIcons */
+@import "primeicons/primeicons.css";
+
+/* Global Theme Colors */
+:root {
+  --primary-color: #1c4980;
+  --text-color: #383838;
+}
