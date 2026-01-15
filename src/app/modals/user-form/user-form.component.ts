@@ -43,7 +43,7 @@ export class UserFormComponent implements OnInit {
     });
   }
 
-  submit(): void {
+  protected submit(): void {
     this.submitted = true;
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -51,4 +51,9 @@ export class UserFormComponent implements OnInit {
     }
     this.ref.close(this.form.value);
   }
+
+  protected cancel(): void {
+    this.ref.close(false);
+  }
+
 }

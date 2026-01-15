@@ -1,0 +1,22 @@
+<p-inputGroup class="search-group">
+  <span pInputGroupAddon>
+    <i class="pi pi-search"></i>
+  </span>
+
+  <input
+    pInputText
+    type="text"
+    [value]="value"
+    placeholder="Search users..."
+    (input)="onInput($event)"
+  />
+
+  <span
+    pInputGroupAddon
+    class="clear-btn"
+    *ngIf="value"
+    (click)="clear()"
+  >
+    <i class="pi pi-times"></i>
+  </span>
+</p-inputGroup>

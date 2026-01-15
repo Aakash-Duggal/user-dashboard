@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+/* Container */
+:host ::ng-deep .search-group {
+  width: 320px;
+  height: 42px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #dfe7ef;
+  background: #fff;
+  display: flex;
+  align-items: center;
+}
+
+/* Icons */
+:host ::ng-deep .p-inputgroup-addon {
+  background: #f8fafc;
+  color: #6b7280;
+  padding: 0 0.75rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Input */
+:host ::ng-deep input.p-inputtext {
+  border: none;
+  font-size: 0.9rem;
+  height: 100%;
+}
+
+/* Focus */
+:host ::ng-deep .search-group:focus-within {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+/* Clear button hover */
+.clear-btn:hover {
+  color: #ef4444;
+  background: #eef2f7;
+}

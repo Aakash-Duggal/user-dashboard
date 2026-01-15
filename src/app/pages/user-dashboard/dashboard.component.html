@@ -2,29 +2,20 @@
   <div class="header">
     <h2>User Dashboard</h2>
 
-  <p-inputGroup>
-  <span pInputGroupAddon>
-    <i class="pi pi-search"></i>
-  </span>
+    @if(users.length) {
+    <app-search (searchChange)="onSearchChange($event)"></app-search>
 
-  <input
-    #searchInput
-    pInputText
-    type="text"
-    placeholder="Search users..."
-    (input)="onGlobalFilter($event)"
-  />
-
-  <span
-    pInputGroupAddon
-    class="clear-btn"
-    *ngIf="searchInput.value"
-    (click)="searchInput.value = ''; table.filterGlobal('', 'contains')"
-  >
-    <i class="pi pi-times"></i>
-  </span>
-</p-inputGroup>
-
+    <!-- ROLE FILTER -->
+    <p-dropdown
+      [options]="roleOptions"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Filter by role"
+      class="role-filter"
+      (onChange)="onRoleFilter($event.value)"
+      showClear
+    ></p-dropdown>
+    }
 
     <button
       pButton
@@ -76,7 +67,7 @@
 
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="3" class="empty">No users added yet</td>
+        <td colspan="3" class="empty">No data found !!!</td>
       </tr>
     </ng-template>
   </p-table>

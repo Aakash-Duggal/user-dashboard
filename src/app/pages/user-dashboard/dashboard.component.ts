@@ -17,7 +17,9 @@ import { FormsModule } from '@angular/forms';
 import { SkeletonModule } from 'primeng/skeleton';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
-
+import { roleOptions } from '../../core/constants/roles.const';
+import { DropdownModule } from 'primeng/dropdown';
+import { SearchComponent } from "../../shared/components/search/search.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -29,9 +31,11 @@ import { InputTextModule } from 'primeng/inputtext';
     DialogModule,
     FormsModule,
     SkeletonModule,
-      InputGroupModule,   // ✅ REQUIRED
-    InputTextModule
-  ],
+    InputGroupModule,
+    InputTextModule,
+    DropdownModule,
+    SearchComponent
+],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -46,6 +50,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private chart: any;
   private ChartJS: any;
   protected tableLoading = false;
+  protected roleOptions = roleOptions;
 
   constructor(
     private userService: UserService,
@@ -142,6 +147,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  onRoleFilter(role: string | null): void {
+    if (role) {
+      this.table.filter(role, 'role', 'equals');
+    } else {
+      this.table.clear();
+    }
+  }
+
+  onSearchChange(value: string): void {
+  this.table.filterGlobal(value, 'contains');
+}
 
   ngOnDestroy(): void {
     this.destroy$.next();
