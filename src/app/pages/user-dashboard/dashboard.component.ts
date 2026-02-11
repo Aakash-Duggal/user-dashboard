@@ -19,7 +19,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
 import { roleOptions } from '../../core/constants/roles.const';
 import { DropdownModule } from 'primeng/dropdown';
-import { SearchComponent } from "../../shared/components/search/search.component";
+import { SearchComponent } from '../../shared/components/search/search.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,8 +34,8 @@ import { SearchComponent } from "../../shared/components/search/search.component
     InputGroupModule,
     InputTextModule,
     DropdownModule,
-    SearchComponent
-],
+    SearchComponent,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -54,19 +54,31 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
   ) {
     //
   }
 
   ngOnInit(): void {
-    this.userService.users$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((users) => {
-        this.users = users;
-        this.tableLoading = false;
-        this.updateChart(users);
-      });
+    // this.userService.users$
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((users) => {
+    //     // this.users = users;
+
+    //     this.tableLoading = false;
+    //     this.updateChart(users);
+    //   });
+    this.getUSersFromLocalStorage();
+  }
+
+  private getUSersFromLocalStorage(): void {
+    const userData = localStorage.getItem('users');
+
+    if (userData) {
+      this.users = JSON.parse(userData);
+      this.tableLoading = false;
+      this.updateChart(this.users);
+    }
   }
 
   onGlobalFilter(event: Event): void {
@@ -74,33 +86,79 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.table.filterGlobal(value, 'contains');
   }
 
-  protected async onAddUser(): Promise<void> {
-    const { UserFormComponent } = await import(
-      '../../modals/user-form/user-form.component'
-    );
+  protected async onAddUser(type: string, user?: User): Promise<void> {
+    const { UserFormComponent } =
+      await import('../../modals/user-form/user-form.component');
 
     this.ref = this.dialogService.open(UserFormComponent, {
       header: 'Add User',
       width: '400px',
       modal: true,
       closable: false,
+      data: { type, user },
     });
 
     this.ref.onClose.pipe(takeUntil(this.destroy$)).subscribe((user: User) => {
       if (user) {
-        // this.userService.addUser(user);
-        this.addUserWithApiSimulation(user);
+        if (type === 'edit') {
+          this.updateUser(user);
+        } else {
+          this.storeInLocal(user);
+        }
       }
     });
   }
 
-  private addUserWithApiSimulation(user: User): void {
-    this.tableLoading = true;
+  private updateUser(updatedUser: User): void {
+    const userData = localStorage.getItem('users');
 
-    setTimeout(() => {
-      this.userService.addUser(user);
-    }, 800);
+    let userArray: User[] = userData ? JSON.parse(userData) : [];
+
+    const index = userArray.findIndex((u) => u._id === updatedUser._id);
+
+    if (index !== -1) {
+      userArray[index] = updatedUser;
+    }
+
+    localStorage.setItem('users', JSON.stringify(userArray));
+
+    this.users = [...userArray];
+
+    this.updateChart(this.users);
   }
+
+  private storeInLocal(user: User): void {
+    const userData = localStorage.getItem('users');
+
+    let userArray: User[] = userData ? JSON.parse(userData) : [];
+
+    userArray.push(user);
+    this.users.push(user);
+
+    localStorage.setItem('users', JSON.stringify(userArray));
+  }
+
+  protected onDeleteUser(userId: number): void {
+    const userData = localStorage.getItem('users');
+
+    let userArray: User[] = userData ? JSON.parse(userData) : [];
+
+    userArray = userArray.filter((u) => u._id !== userId);
+
+    localStorage.setItem('users', JSON.stringify(userArray));
+
+    this.users = [...userArray];
+
+    this.updateChart(this.users);
+  }
+
+  // private addUserWithApiSimulation(user: User): void {
+  //   this.tableLoading = true;
+
+  //   setTimeout(() => {
+  //     this.userService.addUser(user);
+  //   }, 800);
+  // }
 
   protected async loadChartJs() {
     if (!this.ChartJS) {
@@ -157,8 +215,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onSearchChange(value: string): void {
-  this.table.filterGlobal(value, 'contains');
-}
+    this.table.filterGlobal(value, 'contains');
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();

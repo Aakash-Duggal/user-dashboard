@@ -2,19 +2,19 @@
   <div class="header">
     <h2>User Dashboard</h2>
 
-    @if(users.length) {
-    <app-search (searchChange)="onSearchChange($event)"></app-search>
+    @if (users.length) {
+      <app-search (searchChange)="onSearchChange($event)"></app-search>
 
-    <!-- ROLE FILTER -->
-    <p-dropdown
-      [options]="roleOptions"
-      optionLabel="label"
-      optionValue="value"
-      placeholder="Filter by role"
-      class="role-filter"
-      (onChange)="onRoleFilter($event.value)"
-      showClear
-    ></p-dropdown>
+      <!-- ROLE FILTER -->
+      <p-dropdown
+        [options]="roleOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Filter by role"
+        class="role-filter"
+        (onChange)="onRoleFilter($event.value)"
+        showClear
+      ></p-dropdown>
     }
 
     <button
@@ -22,7 +22,7 @@
       label="Add User"
       icon="pi pi-plus"
       class="add-btn"
-      (click)="onAddUser()"
+      (click)="onAddUser('add')"
     ></button>
   </div>
 
@@ -51,17 +51,37 @@
 
     <ng-template pTemplate="header">
       <tr>
+        <th>User Id</th>
         <th>Name</th>
         <th>Email</th>
         <th>Role</th>
+        <th>Action</th>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-user>
       <tr>
+        <td>{{ user._id }}</td>
         <td>{{ user.name }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.role }}</td>
+        <td>
+          <button
+            pButton
+            label="Edit"
+            icon="pi pi-pencil"
+            class="p-button-sm"
+              style="margin-right: 8px"
+            (click)="onAddUser('edit', user)"
+          ></button>
+          <button
+            pButton
+            label="Delete"
+            icon="pi pi-trash"
+            (click)="onDeleteUser(user._id)"
+            class="p-button-sm p-button-danger"
+          ></button>
+        </td>
       </tr>
     </ng-template>
 
