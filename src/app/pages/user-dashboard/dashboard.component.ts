@@ -136,6 +136,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.users.push(user);
 
     localStorage.setItem('users', JSON.stringify(userArray));
+     this.users = [...userArray];
+
+  this.updateChart(this.users);
   }
 
   protected onDeleteUser(userId: number): void {
